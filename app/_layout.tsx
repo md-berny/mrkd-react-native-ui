@@ -1,5 +1,3 @@
-import { Stack } from "expo-router";
+// Layout is now the entrypoint for expo apps
 
-export default function RootLayout() {
-  return <Stack />;
-}
+export { default } from "../.rnstorybook";
