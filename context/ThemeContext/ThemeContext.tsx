@@ -1,26 +1,27 @@
 import { createContext, useContext, useState } from "react";
-import { ThemeContextType, ThemeProviderProps } from "./ThemeContext.types";
+import {
+  ThemeContextType,
+  ThemeProviderProps,
+  ThemeType,
+} from "./ThemeContext.types";
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+const ThemeContext = createContext<ThemeContextType<any> | undefined>(
+  undefined,
+);
 
-export const useTheme = () => {
-  const context = useContext(ThemeContext);
-
-  // Currently, we'll still allow components to be used without the provider so we can let them consume an undefined style context
-
-  return context;
+export const useTheme = <T extends ThemeType = ThemeType>() => {
+  return useContext(ThemeContext) as ThemeContextType<T> | undefined;
 };
 
-export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [theme, setTheme] = useState<ThemeContextType["theme"] | undefined>();
-
-  const handleSetTheme: ThemeContextType["setTheme"] = (theme) => {
-    setTheme(theme);
-  };
-
-  const value = { theme, setTheme: handleSetTheme };
+export const ThemeProvider = <T extends ThemeType>({
+  children,
+  theme: initialTheme,
+}: ThemeProviderProps<T>) => {
+  const [theme, setTheme] = useState<T | undefined>(initialTheme);
 
   return (
-    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      {children}
+    </ThemeContext.Provider>
   );
 };

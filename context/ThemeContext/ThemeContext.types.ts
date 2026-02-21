@@ -1,11 +1,14 @@
+// ThemeContext.types.ts
+import { ComponentRegistry } from "@/components/registry.types";
 import { PropsWithChildren } from "react";
 
-// Declare here component specific type
-export type ThemeType = Partial<{}>;
+export type ThemeType = Partial<ComponentRegistry>;
 
-export type ThemeContextType = {
-  theme: ThemeType | undefined;
-  setTheme: (theme: ThemeType | undefined) => void;
+export type ThemeContextType<T extends ThemeType = ThemeType> = {
+  theme: T | undefined;
+  setTheme: (theme: T | undefined) => void;
 };
 
-export type ThemeProviderProps = PropsWithChildren & { theme?: ThemeType };
+export type ThemeProviderProps<T extends ThemeType> = PropsWithChildren & {
+  theme?: T;
+};
