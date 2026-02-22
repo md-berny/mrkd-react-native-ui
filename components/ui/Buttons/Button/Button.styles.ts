@@ -1,5 +1,5 @@
 import { loopymPallete } from "@/constants/palletes/loopym/loopymPallete";
-import { borderRadius, colors, spacing } from "@/constants/styles";
+import { borderRadius, colors, spacing } from "@/constants/tokens";
 import { StyleSheet } from "react-native";
 
 export const variantStyles = StyleSheet.create({

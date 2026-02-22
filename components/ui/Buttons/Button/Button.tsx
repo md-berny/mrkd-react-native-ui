@@ -1,4 +1,4 @@
-import { borderRadius, colors } from "@/constants/styles";
+import { borderRadius, colors } from "@/constants/tokens";
 import { ThemeType, useTheme } from "@/context";
 import { LinearGradient } from "expo-linear-gradient";
 import { Pressable, PressableProps } from "react-native";

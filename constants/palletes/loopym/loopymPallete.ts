@@ -1,4 +1,4 @@
-import { colors } from "../../styles/colors/colors";
+import { colors } from "../../tokens/colors/colors";
 
 export const loopymPallete = {
   fg: {
