@@ -1,10 +1,16 @@
 import { borderRadius, colors } from "@/constants/tokens";
 import { ThemeType, useTheme } from "@/context";
 import { LinearGradient } from "expo-linear-gradient";
-import { Pressable, PressableProps } from "react-native";
+import { Pressable, PressableProps, StyleProp, TextStyle } from "react-native";
 import { Typography } from "../../Typography/Typography";
 import { TypographyVariant } from "../../Typography/Typography.types";
-import { sizeStyles, stateStyles, variantStyles } from "./Button.styles";
+import {
+  sizeStyles,
+  stateStyles,
+  typographyColors,
+  typographySize,
+  variantStyles,
+} from "./Button.styles";
 import { ButtonSize, ButtonVariant } from "./Button.types";
 
 type ButtonProps = PressableProps & {
@@ -13,6 +19,7 @@ type ButtonProps = PressableProps & {
   leftSlot?: React.ReactNode;
   rightSlot?: React.ReactNode;
   typographyVariant?: TypographyVariant;
+  typographyStyle?: StyleProp<TextStyle>;
 };
 
 export const Button = <T extends ThemeType = ThemeType>({
@@ -23,6 +30,7 @@ export const Button = <T extends ThemeType = ThemeType>({
   variant = "primary",
   size = "sm",
   typographyVariant,
+  typographyStyle,
   ...rest
 }: ButtonProps) => {
   const context = useTheme<T>();
@@ -36,6 +44,9 @@ export const Button = <T extends ThemeType = ThemeType>({
   >;
   const mergedSize = { ...sizeStyles, ...sizeFromTheme } as Record<string, any>;
 
+  const textColor = typographyColors[variant];
+  const textVariant = typographySize[size];
+
   const computedVariant =
     variant !== "chat"
       ? mergedVariant[variant]
@@ -46,7 +57,12 @@ export const Button = <T extends ThemeType = ThemeType>({
     <>
       {leftSlot}
       {typeof children === "string" ? (
-        <Typography variant={typographyVariant}>{children}</Typography>
+        <Typography
+          variant={typographyVariant ?? textVariant.typographyVariant}
+          style={[{ color: textColor.color }, typographyStyle]}
+        >
+          {children}
+        </Typography>
       ) : (
         children
       )}
@@ -58,6 +74,7 @@ export const Button = <T extends ThemeType = ThemeType>({
     const baseStyle = [
       computedVariant,
       computedSize,
+      stateStyles.base,
       state.pressed && stateStyles.pressed,
     ];
 
@@ -67,15 +84,16 @@ export const Button = <T extends ThemeType = ThemeType>({
 
   if (variant === "chat") {
     return (
-      <Pressable {...rest} style={computeStyle}>
-        <LinearGradient
-          colors={[colors.indigo[50], colors.brand[500]]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-        >
+      <LinearGradient
+        colors={[colors.indigo[50], colors.brand[500]]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        style={{ borderRadius: borderRadius.full }}
+      >
+        <Pressable {...rest} style={computeStyle}>
           {renderContent()}
-        </LinearGradient>
-      </Pressable>
+        </Pressable>
+      </LinearGradient>
     );
   }
 

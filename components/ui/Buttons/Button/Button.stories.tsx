@@ -51,7 +51,7 @@ export const Playground: Story = {
 // --- Variants ---
 export const AllVariants: Story = {
   render: () => (
-    <View style={{ gap: 8, alignItems: "flex-start" }}>
+    <View style={{ gap: 8 }}>
       <Button variant="primary">Primary</Button>
       <Button variant="secondary">Secondary</Button>
       <Button variant="tertiary">Tertiary</Button>
@@ -100,10 +100,23 @@ export const VariantSizeGrid: Story = {
       {(["primary", "secondary", "outline", "danger"] as const).map(
         (variant) => (
           <View key={variant} style={{ gap: 8 }}>
-            <Text style={{ fontSize: 12, color: "#888", marginBottom: 4 }}>
+            <Text
+              style={{
+                fontSize: 12,
+                color: "#888",
+                marginBottom: 4,
+              }}
+            >
               {variant}
             </Text>
-            <View style={{ flexDirection: "row", gap: 8, flexWrap: "wrap" }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "flex-start",
+                gap: 8,
+                flexWrap: "wrap",
+              }}
+            >
               {(["xs", "sm", "md", "lg", "xl"] as const).map((size) => (
                 <Button key={size} variant={variant} size={size}>
                   {size}

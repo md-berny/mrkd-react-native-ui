@@ -1,6 +1,8 @@
 import { loopymPallete } from "@/constants/palletes/loopym/loopymPallete";
 import { borderRadius, colors, spacing } from "@/constants/tokens";
 import { StyleSheet } from "react-native";
+import { TypographyVariant } from "../../Typography/Typography.types";
+import { ButtonSize, ButtonVariant } from "./Button.types";
 
 export const variantStyles = StyleSheet.create({
   primary: {
@@ -75,7 +77,69 @@ export const sizeStyles = StyleSheet.create({
 });
 
 export const stateStyles = StyleSheet.create({
+  base: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   pressed: {
     opacity: 0.8,
   },
 });
+
+export const typographyColors: Record<ButtonVariant, { color: string }> = {
+  chat: {
+    color: loopymPallete.fg.black,
+  },
+  primary: {
+    color: loopymPallete.fg.black,
+  },
+  secondary: {
+    color: loopymPallete.fg.black,
+  },
+  tertiary: {
+    color: loopymPallete.fg.black,
+  },
+  tertiaryDark: {
+    color: loopymPallete.fg.black,
+  },
+  quarternary: {
+    color: loopymPallete.fg.default,
+  },
+  success: {
+    color: loopymPallete.fg.black,
+  },
+  danger: {
+    color: loopymPallete.fg.black,
+  },
+  warning: {
+    color: loopymPallete.fg.black,
+  },
+  info: {
+    color: loopymPallete.fg.black,
+  },
+  outline: {
+    color: loopymPallete.fg.black,
+  },
+};
+
+export const typographySize: Record<
+  ButtonSize,
+  { typographyVariant: TypographyVariant }
+> = {
+  xs: {
+    typographyVariant: "body-small-bold",
+  },
+  sm: {
+    typographyVariant: "body-small-bold",
+  },
+  md: {
+    typographyVariant: "body-default-bold",
+  },
+  lg: {
+    typographyVariant: "body-large-bold",
+  },
+  xl: {
+    typographyVariant: "body-large-bold",
+  },
+};
