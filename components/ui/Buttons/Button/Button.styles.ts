@@ -45,6 +45,7 @@ export const variantStyles = StyleSheet.create({
     backgroundColor: colors.background,
     borderColor: loopymPallete.border.baseDark,
     borderRadius: borderRadius.full,
+    borderWidth: 1,
   },
 });
 

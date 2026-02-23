@@ -1,27 +1,21 @@
-import { ThemeType, useTheme } from "@/context";
+import { useTheme } from "@/context";
 import { Text, TextProps, TextStyle } from "react-native";
 import { toneStyles, typographyVariants } from "./Typography.styles";
 import { TypographyTone, TypographyVariant } from "./Typography.types";
 
-type TypographyProps<
-  TVariants extends Record<string, TextStyle> = Record<string, never>,
-  TTones extends Record<string, TextStyle> = Record<string, never>,
-> = TextProps & {
-  variant?: TypographyVariant | (string & keyof TVariants);
-  tone?: TypographyTone | (string & keyof TTones);
+type TypographyProps = TextProps & {
+  variant?: TypographyVariant;
+  tone?: TypographyTone;
 };
 
-export const Typography = <T extends ThemeType = ThemeType>({
+export const Typography = ({
   variant = "body-default",
   tone,
   style,
   children,
   ...props
-}: TypographyProps<
-  NonNullable<NonNullable<T["typography"]>["variant"]>,
-  NonNullable<NonNullable<T["typography"]>["tone"]>
->) => {
-  const context = useTheme<T>();
+}: TypographyProps) => {
+  const context = useTheme();
 
   const variantFromTheme = context?.theme?.typography?.variant ?? {};
   const toneFromTheme = context?.theme?.typography?.tone ?? {};
@@ -30,20 +24,20 @@ export const Typography = <T extends ThemeType = ThemeType>({
     ...typographyVariants,
     ...variantFromTheme,
   } as Record<string, TextStyle>;
-
-  const mergedTone = {
-    ...toneStyles,
-    ...toneFromTheme,
-  } as Record<string, TextStyle>;
-
-  const computedStyle =
-    mergedVariant[variant as string] ?? mergedVariant["body-default"];
-
-  const computedTone =
-    tone && mergedTone[tone as string] ? mergedTone[tone as string] : undefined;
+  const mergedTone = { ...toneStyles, ...toneFromTheme } as Record<
+    string,
+    TextStyle
+  >;
 
   return (
-    <Text style={[computedStyle, computedTone, style]} {...props}>
+    <Text
+      style={[
+        mergedVariant[variant],
+        tone ? mergedTone[tone] : undefined,
+        style,
+      ]}
+      {...props}
+    >
       {children}
     </Text>
   );
